@@ -29,17 +29,21 @@ export function ChoferLayout({ children, activeSection, onSectionChange, role, o
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[390px] relative flex flex-col min-h-screen border-x border-border bg-card">
-        <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between relative">
-          <div className="flex-1">
-            <h1 className="text-lg font-bold">{sectionTitles[activeSection]}</h1>
+        <div className="sticky top-0 z-10">
+          <header className="bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
+            <div className="flex-1">
+              <h1 className="text-lg font-bold">{sectionTitles[activeSection]}</h1>
+            </div>
+            <div className="size-8 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
+              <span className="text-xs font-bold text-white">CM</span>
+            </div>
+          </header>
+          <div className="flex justify-end px-4 py-1.5 bg-muted/30 border-b border-border">
+            <div className="scale-[0.65] origin-right">
+              <RoleSwitcher role={role} onRoleChange={onRoleChange} />
+            </div>
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 scale-75 sm:scale-90">
-            <RoleSwitcher role={role} onRoleChange={onRoleChange} />
-          </div>
-          <div className="size-8 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
-            <span className="text-xs font-bold text-white">CM</span>
-          </div>
-        </header>
+        </div>
 
         <main className="flex-1 overflow-auto pb-16">
           {children}
