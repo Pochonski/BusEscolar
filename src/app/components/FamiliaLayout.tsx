@@ -1,4 +1,5 @@
 import { Home, Map, CreditCard, Bell, User, AlertTriangle } from "lucide-react";
+import { RoleSwitcher, type Role } from "./RoleSwitcher";
 
 export type FamiliaSection = "inicio" | "mapa" | "pagos" | "notificaciones" | "perfil" | "reportar";
 
@@ -6,6 +7,8 @@ interface FamiliaLayoutProps {
   children: React.ReactNode;
   activeSection: FamiliaSection;
   onSectionChange: (section: FamiliaSection) => void;
+  role: Role;
+  onRoleChange: (role: Role) => void;
 }
 
 const tabs: Array<{ id: FamiliaSection; icon: typeof Home; label: string }> = [
@@ -26,14 +29,17 @@ const sectionTitles: Record<FamiliaSection, string> = {
   perfil: "Perfil del Estudiante",
 };
 
-export function FamiliaLayout({ children, activeSection, onSectionChange }: FamiliaLayoutProps) {
+export function FamiliaLayout({ children, activeSection, onSectionChange, role, onRoleChange }: FamiliaLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[390px] relative flex flex-col min-h-screen border-x border-border bg-card">
         {/* Header */}
-        <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center">
+        <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between relative">
           <div className="flex-1">
             <h1 className="text-lg font-bold">{sectionTitles[activeSection]}</h1>
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 scale-75 sm:scale-90">
+            <RoleSwitcher role={role} onRoleChange={onRoleChange} />
           </div>
           <div className="size-8 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
             <span className="text-xs font-bold text-white">AT</span>

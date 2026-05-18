@@ -23,9 +23,8 @@ import { ChoferRuta } from "./components/ChoferRuta";
 import { ChoferReportar } from "./components/ChoferReportar";
 import { ChoferMapa } from "./components/ChoferMapa";
 import { ChoferPerfil } from "./components/ChoferPerfil";
-import { Button } from "./components/ui/button";
 import { Toaster } from "./components/ui/sonner";
-import { Building2, Shield, Users, Bus } from "lucide-react";
+import type { Role } from "./components/RoleSwitcher";
 
 type Role = "admin" | "empresa" | "familia" | "chofer";
 
@@ -38,48 +37,8 @@ export default function App() {
 
   return (
     <div>
-      {/* Role toggle bar */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 flex items-center gap-1 bg-card border rounded-full px-1.5 py-1 shadow-lg">
-        <Button
-          size="sm"
-          variant={role === "empresa" ? "default" : "ghost"}
-          className="rounded-full h-7 text-xs px-2.5"
-          onClick={() => setRole("empresa")}
-        >
-          <Building2 className="mr-1 size-3.5" />
-          Empresa
-        </Button>
-        <Button
-          size="sm"
-          variant={role === "admin" ? "default" : "ghost"}
-          className="rounded-full h-7 text-xs px-2.5"
-          onClick={() => setRole("admin")}
-        >
-          <Shield className="mr-1 size-3.5" />
-          Admin
-        </Button>
-        <Button
-          size="sm"
-          variant={role === "familia" ? "default" : "ghost"}
-          className="rounded-full h-7 text-xs px-2.5"
-          onClick={() => setRole("familia")}
-        >
-          <Users className="mr-1 size-3.5" />
-          Familia
-        </Button>
-        <Button
-          size="sm"
-          variant={role === "chofer" ? "default" : "ghost"}
-          className="rounded-full h-7 text-xs px-2.5"
-          onClick={() => setRole("chofer")}
-        >
-          <Bus className="mr-1 size-3.5" />
-          Chofer
-        </Button>
-      </div>
-
       {role === "empresa" && (
-        <EmpresaLayout activeSection={empresaSection} onSectionChange={setEmpresaSection}>
+        <EmpresaLayout activeSection={empresaSection} onSectionChange={setEmpresaSection} role={role} onRoleChange={setRole}>
           {(() => {
             switch (empresaSection) {
               case "dashboard": return <EmpresaDashboard />;
@@ -97,13 +56,13 @@ export default function App() {
       )}
 
       {role === "admin" && (
-        <AdminLayout activeSection={adminSection} onSectionChange={setAdminSection}>
+        <AdminLayout activeSection={adminSection} onSectionChange={setAdminSection} role={role} onRoleChange={setRole}>
           {adminSection === "dashboard" ? <AdminDashboard /> : <AdminEmpresas />}
         </AdminLayout>
       )}
 
       {role === "familia" && (
-        <FamiliaLayout activeSection={familiaSection} onSectionChange={setFamiliaSection}>
+        <FamiliaLayout activeSection={familiaSection} onSectionChange={setFamiliaSection} role={role} onRoleChange={setRole}>
           {(() => {
             switch (familiaSection) {
               case "inicio": return <FamiliaDashboard onNavigate={setFamiliaSection} />;
@@ -119,7 +78,7 @@ export default function App() {
       )}
 
       {role === "chofer" && (
-        <ChoferLayout activeSection={choferSection} onSectionChange={setChoferSection}>
+        <ChoferLayout activeSection={choferSection} onSectionChange={setChoferSection} role={role} onRoleChange={setRole}>
           {choferSection === "ruta"
             ? <ChoferRuta onNavigate={setChoferSection} />
             : choferSection === "reportar"

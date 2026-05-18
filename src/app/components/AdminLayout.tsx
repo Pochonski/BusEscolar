@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { RoleSwitcher, type Role } from "./RoleSwitcher";
 
 export type AdminMenuSection = "dashboard" | "empresas";
 
@@ -16,6 +17,8 @@ interface AdminLayoutProps {
   children: React.ReactNode;
   activeSection: AdminMenuSection;
   onSectionChange: (section: AdminMenuSection) => void;
+  role: Role;
+  onRoleChange: (role: Role) => void;
 }
 
 const menuItems: Array<{
@@ -32,7 +35,7 @@ const sectionTitles: Record<AdminMenuSection, string> = {
   empresas: "Gestión de Empresas",
 };
 
-export function AdminLayout({ children, activeSection, onSectionChange }: AdminLayoutProps) {
+export function AdminLayout({ children, activeSection, onSectionChange, role, onRoleChange }: AdminLayoutProps) {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
@@ -106,13 +109,16 @@ export function AdminLayout({ children, activeSection, onSectionChange }: AdminL
         </Sidebar>
         <main className="flex-1 flex flex-col">
           <header className="sticky top-0 z-10 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-            <div className="flex items-center justify-between px-6 py-4">
+            <div className="flex items-center justify-between px-6 py-4 relative">
               <div className="flex items-center gap-4">
                 <SidebarTrigger />
                 <div>
                   <h1 className="text-2xl font-bold text-foreground">{sectionTitles[activeSection]}</h1>
                   <p className="text-sm text-muted-foreground">Viernes, 16 de Mayo 2026</p>
                 </div>
+              </div>
+              <div className="absolute left-1/2 -translate-x-1/2">
+                <RoleSwitcher role={role} onRoleChange={onRoleChange} />
               </div>
               <div className="flex items-center gap-3">
                 <Button variant="outline" size="icon" className="relative">

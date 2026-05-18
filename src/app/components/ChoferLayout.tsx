@@ -1,4 +1,5 @@
 import { Route, Map, AlertTriangle, User } from "lucide-react";
+import { RoleSwitcher, type Role } from "./RoleSwitcher";
 
 export type ChoferSection = "ruta" | "mapa" | "reportar" | "perfil";
 
@@ -6,6 +7,8 @@ interface ChoferLayoutProps {
   children: React.ReactNode;
   activeSection: ChoferSection;
   onSectionChange: (section: ChoferSection) => void;
+  role: Role;
+  onRoleChange: (role: Role) => void;
 }
 
 const tabs: Array<{ id: ChoferSection; icon: typeof Route; label: string }> = [
@@ -22,13 +25,16 @@ const sectionTitles: Record<ChoferSection, string> = {
   perfil: "Perfil",
 };
 
-export function ChoferLayout({ children, activeSection, onSectionChange }: ChoferLayoutProps) {
+export function ChoferLayout({ children, activeSection, onSectionChange, role, onRoleChange }: ChoferLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex justify-center">
       <div className="w-full max-w-[390px] relative flex flex-col min-h-screen border-x border-border bg-card">
-        <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center">
+        <header className="sticky top-0 z-10 bg-card/95 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between relative">
           <div className="flex-1">
             <h1 className="text-lg font-bold">{sectionTitles[activeSection]}</h1>
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 scale-75 sm:scale-90">
+            <RoleSwitcher role={role} onRoleChange={onRoleChange} />
           </div>
           <div className="size-8 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
             <span className="text-xs font-bold text-white">CM</span>
