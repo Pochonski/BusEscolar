@@ -39,7 +39,7 @@ export default function App() {
   return (
     <div>
       {/* Role toggle bar */}
-      <div className="fixed top-3 right-3 z-50 flex items-center gap-1 bg-card border rounded-full px-1.5 py-1 shadow-lg">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 flex items-center gap-1 bg-card border rounded-full px-1.5 py-1 shadow-lg">
         <Button
           size="sm"
           variant={role === "empresa" ? "default" : "ghost"}
